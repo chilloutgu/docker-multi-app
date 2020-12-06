@@ -21,3 +21,15 @@ after_success:
     - docker push chilloutgu/docker-frontend
     - docker push chilloutgu/docker-backend
     - docker push chilloutgu/docker-nginx
+
+deploy:
+    provider: elasticbeanstalk
+    region: ap-northeast-2
+    app: docker-multi-app
+    env: DockerMultiApp-env
+    bucket_name: elasticbeanstalk-ap-northeast-2-607623242513
+    bucket_path: docker-multi-app
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_KEY_ID
+    secret_access_key: $AWS_SECRET_ACCESS_KEY

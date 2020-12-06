@@ -18,6 +18,12 @@ services:
         volumes:
             - /usr/src/app/node_modules
             - ./backend:/usr/src/app
+        environment: 
+            MYSQL_HOST: mysql
+            MYSQL_USER: root
+            MYSQL_ROOT_PASSWORD: guya7777
+            MYSQL_DATABASE: myapp
+            MYSQL_PORT: 3306
 
     nginx:
         restart: always
