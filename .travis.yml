@@ -20,4 +20,4 @@ after_success:
     # 도커허브 이미지 푸쉬
     - docker push chilloutgu/docker-frontend
     - docker push chilloutgu/docker-backend
-    - docker push chilloutgu/nginx
+    - docker push chilloutgu/docker-nginx
