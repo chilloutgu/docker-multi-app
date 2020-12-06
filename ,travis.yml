@@ -1,0 +1,23 @@
+sudo: required
+language: generic
+services:
+    - docker
+before_install:
+    # 도커 dev 이미지 빌드
+    - docker build -t chilloutgu/docker-multi-app -f ./frontend/Dockerfile.dev ./frontend
+script:
+    # 도커 dev 이미지 테스트
+    - docker run -e CI=true chilloutgu/docker-multi-app npm run test
+after_success:
+    # 도커 이미지 빌드
+    - docker build -t chilloutgu/docker-frontend ./frontend
+    - docker build -t chilloutgu/docker-backend ./backend
+    - docker build -t chilloutgu/docker-nginx ./nginx
+
+    # 도커허브 로그인
+    - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
+
+    # 도커허브 이미지 푸쉬
+    - docker push chilloutgu/docker-frontend
+    - docker push chilloutgu/docker-backend
+    - docker push chilloutgu/nginx
