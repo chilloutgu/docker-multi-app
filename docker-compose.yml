@@ -1,0 +1,42 @@
+version: "3"
+services:
+    frontend:
+        build: 
+            dockerfile: Dockerfile.dev
+            context: ./frontend
+        container_name: app_frontend
+        volumes:
+            - /usr/src/app/node_modules
+            - ./frontend:/usr/src/app
+        stdin_open: true
+    
+    backend:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./backend
+        container_name: app_backend
+        volumes:
+            - /usr/src/app/node_modules
+            - ./backend:/usr/src/app
+
+    nginx:
+        restart: always
+        build: 
+            dockerfile: Dockerfile
+            context: ./nginx
+        container_name: app_nginx
+        ports:
+            - 3000:80
+
+    # mysql:
+    #    restart: unless-stopped
+    #    build: ./mysql
+    #    container_name: app_mysql
+    #    volumes: 
+    #        - ./mysql/mysql_data:/var/lib/mysql
+    #        - ./mysql/sqls:/docker-entrypoint-initdb.d/
+    #    ports:
+    #        - 3306:3306
+    #    environment: 
+    #        MYSQL_ROOT_PASSWORD: guya
+    #        MYSQL_DATABASE: myapp
